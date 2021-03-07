@@ -3,17 +3,21 @@
     <q-header class="bg-white text-grey-10"
       bordered
     >
-      <q-toolbar>
+      <q-toolbar class="constrain">
         <q-btn
           to="/camera"
-          
+          class="large-screen-only q-mr-sm"
           icon="eva-video-outline"
           size="18px"
           flat
           round
           dense
         /><!-- class="large-screen-only" -->
-
+        <q-separator
+        class="large-screen-only"
+          vertical
+          spaced
+        />
         <q-toolbar-title 
           class="text-grand-hotel"
         >
@@ -21,7 +25,7 @@
         </q-toolbar-title>
           <q-btn
           to="/"
-          
+          class="large-screen-only"
           icon="eva-home-outline"
           size="18px"
           flat
@@ -32,7 +36,7 @@
     </q-header>
 
     <q-footer
-      class="bg-white "
+      class="small-screen-only bg-white "
       bordered
     >
     <!-- small-screen-only -->
@@ -54,7 +58,7 @@
         
       </q-footer>
 
-    <q-page-container>
+    <q-page-container class="bg-blue-grey-2">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -76,9 +80,17 @@ export default {
 }
 </script>
 <style lang="sass">
+
+  
+
+
+.q-toolbar
+  @media (min-width: $breakpoint-sm-min)
+  height: 77px
   .q-toolbar__title
-    text-align: center
     font-size: 30px
+    @media (max-width: $breakpoint-xs-max)
+    text-align: center
   .q-footer
     .q-tab-size: 30px
 </style>
