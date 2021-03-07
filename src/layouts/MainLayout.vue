@@ -1,28 +1,41 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header class="bg-white text-grey-10"
+      bordered
+    >
       <q-toolbar>
         <q-btn
+          to="/camera"
+          
+          icon="eva-video-outline"
+          size="18px"
           flat
-          dense
           round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
+          dense
+        /><!-- class="large-screen-only" -->
 
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title 
+          class="text-grand-hotel"
+        >
+          Gallery
         </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+          <q-btn
+          to="/"
+          
+          icon="eva-home-outline"
+          size="18px"
+          flat
+          round
+          dense
+        /><!-- class="large-screen-only" -->
       </q-toolbar>
     </q-header>
 
     <q-footer
-      class="bg-white"
+      class="bg-white "
       bordered
     >
+    <!-- small-screen-only -->
         
           <q-tabs
             class="text-grey-10"
@@ -31,15 +44,11 @@
           >
         <q-route-tab
           to="/"
-          icon="mail"
-          label="Home"
-          name="home"
+          icon="eva-home-outline"
         />
         <q-route-tab
           to="/camera"
-          icon="alarm"
-          label="Camera"
-          name="camera"
+          icon="eva-video-outline"
         />
       </q-tabs>
         
@@ -66,3 +75,10 @@ export default {
   }
 }
 </script>
+<style lang="sass">
+  .q-toolbar__title
+    text-align: center
+    font-size: 30px
+  .q-footer
+    .q-tab-size: 30px
+</style>
