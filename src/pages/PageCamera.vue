@@ -54,6 +54,7 @@
         >
         <template v-slot:append>
           <q-btn
+            @click="getLocation"
             icon="eva-navigation-outline"
             dense
             flat
@@ -161,7 +162,35 @@ export default {
   var blob = new Blob([ab], {type: mimeString});
   return blob;
 
-}
+},
+    getLocation() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.getCityAndCountry(position)
+      }, err => {
+        this.locationError()
+      }, { timeout: 7000 })
+    },
+    getCityAndCountry(position) {
+      let apiUrl = `https://geocode.xyz/${ position.coords.latitude },${ position.coords.longitude }?json=1`
+      this.$axios.get(apiUrl).then(result => {
+        this.locationSuccess(result)
+      }).catch(err => {
+        this.locationError()
+      })
+    },
+    locationSuccess(result) {
+      this.post.location = result.data.city
+      if (result.data.country) {
+        this.post.location += `, ${ result.data.country }`
+      }
+    },
+    locationError() {
+      this.$q.dialog({
+        dark: true,
+        title: 'Error',
+        message: 'Could not find your location'
+      })
+    }
   },
   mounted() {
     this.initCamera()
