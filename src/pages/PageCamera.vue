@@ -47,6 +47,7 @@
       <div class="row justify-center q-ma-md">
         <q-input
           v-model="post.location"
+          :loading="locationLoading"
           class="col col-sm-6"
           label="Location"
           outlined
@@ -54,6 +55,7 @@
         >
         <template v-slot:append>
           <q-btn
+            v-if="!locationLoading && locationSupported"
             @click="getLocation"
             icon="eva-navigation-outline"
             dense
@@ -90,7 +92,15 @@ export default {
       },
       imageCaptured: false,
       imageUpload: [],
-      hasCameraSupport: true
+      hasCameraSupport: true,
+      locationLoading: false
+    }
+  },
+  computed: {
+    locationSupported() {
+      if ('geolocation' in navigator) return 
+      true
+      return false
     }
   },
   methods: {
@@ -164,6 +174,7 @@ export default {
 
 },
     getLocation() {
+      this.locationLoading = true
       navigator.geolocation.getCurrentPosition(position => {
         this.getCityAndCountry(position)
       }, err => {
@@ -183,6 +194,7 @@ export default {
       if (result.data.country) {
         this.post.location += `, ${ result.data.country }`
       }
+      this.locationLoading = false
     },
     locationError() {
       this.$q.dialog({
@@ -190,6 +202,7 @@ export default {
         title: 'Error',
         message: 'Could not find your location'
       })
+      this.locationLoading = false
     }
   },
   mounted() {
