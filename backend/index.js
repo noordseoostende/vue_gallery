@@ -1,8 +1,18 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (request, response) => {
-  response.send("Dagon feest");
+app.get("/posts", (request, response) => {
+  let posts = [
+    {
+      caption: "Velden",
+      location: "Koekelare"
+    },
+    {
+      caption: "Het Center",
+      location: "Kortrijk"
+    }
+  ];
+  response.send(posts);
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
