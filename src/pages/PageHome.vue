@@ -67,46 +67,25 @@ export default {
   name: 'PageHome',
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          caption: 'Gouden Brug',
-          date: 1615118834244,
-          location: 'Italie, Rome',
-          imageUrl: 'https://i.pinimg.com/236x/00/b0/58/00b058d7a8d5212bb4b4b526f922f814.jpg'
-
-        },
-        {
-          id: 2,
-          caption: 'Gouden Brug',
-          date: 1615118834244,
-          location: 'Italie, Rome',
-          imageUrl: 'https://cdn.quasar.dev/img/parallax2.jpg'
-
-        },
-        {
-          id: 3,
-          caption: 'Gouden Brug',
-          date: 1615118834244,
-          location: 'Italie, Rome',
-          imageUrl: 'https://cdn.quasar.dev/img/parallax2.jpg'
-
-        },
-        {
-          id: 4,
-          caption: 'Gouden Brug',
-          date: 1615118834244,
-          location: 'Italie, Rome',
-          imageUrl: 'https://cdn.quasar.dev/img/parallax2.jpg'
-
-        }
-      ]
+      posts: []
+    }
+  },
+  methods: {
+    getPosts() {
+      this.$axios.get('http://localhost:3000/posts').then(response => {
+        this.posts = response.data
+      }).catch(err => {
+        console.log('err: ', err)
+      })
     }
   },
   filters: {
     niceDate(value) {
       return date.formatDate(value, 'MMMM D h:mmA')
     }
+  },
+  created() {
+    this.getPosts()
   }
 }
 </script>
