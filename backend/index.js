@@ -26,5 +26,5 @@ app.get("/posts", (request, response) => {
       response.send(posts);
     });
 });
-
+/* listen */
 app.listen(process.env.PORT || 3000);

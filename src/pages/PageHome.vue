@@ -3,6 +3,8 @@
 
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-sm-8">
+        <template v-if="!loadingPosts">
+
         <q-card
       v-for="post in posts"
       :key="post.id"
@@ -36,6 +38,32 @@
         <div class="text-caption text-grey">{{ post.date | niceDate }}</div>
       </q-card-section>
     </q-card>
+        </template>
+        <template v-else>
+          <q-card flat bordered>
+      <q-item>
+        <q-item-section avatar>
+          <q-skeleton type="QAvatar" size="40px" />
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label>
+            <q-skeleton type="text" />
+          </q-item-label>
+          <q-item-label caption>
+            <q-skeleton type="text" />
+          </q-item-label>
+        </q-item-section>
+      </q-item>
+
+      <q-skeleton height="200px" square />
+
+      <q-card-actions align="right" class="q-gutter-md">
+        <q-skeleton type="QBtn" />
+        <q-skeleton type="QBtn" />
+      </q-card-actions>
+    </q-card>
+        </template>
       </div>
       <div class="col-4 large-screen-only">
         <q-item class="fixed">
@@ -67,16 +95,26 @@ export default {
   name: 'PageHome',
   data() {
     return {
-      posts: []
+      posts: [],
+      loadingPosts: false
     }
   },
   methods: {
     getPosts() {
-      this.$axios.get('http://localhost:3000/posts').then(response => {
-        this.posts = response.data
-      }).catch(err => {
-        console.log('err: ', err)
-      })
+      
+        this.loadingPosts = true
+        this.$axios.get('http://localhost:3000/posts').then(response => {
+          this.posts = response.data
+          this.loadingPosts = false
+        }).catch(err => {
+          this.$q.dialog({
+            dark: true,
+            title: 'Error',
+            message: 'Could not find your location'
+        })
+          this.loadingPosts = false
+        })
+
     }
   },
   filters: {
