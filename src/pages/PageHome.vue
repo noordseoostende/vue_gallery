@@ -3,7 +3,7 @@
 
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-sm-8">
-        <template v-if="!loadingPosts">
+        <template v-if="!loadingPosts && posts.length">
 
         <q-card
       v-for="post in posts"
@@ -39,11 +39,14 @@
       </q-card-section>
     </q-card>
         </template>
+        <template v-else-if="!loadingPosts && !posts.length">
+          <h5 class="text-center text-green">No posts yet</h5>
+        </template>
         <template v-else>
           <q-card flat bordered>
       <q-item>
         <q-item-section avatar>
-          <q-skeleton type="QAvatar" size="40px" />
+          <q-skeleton type="QAvatar" animation="fade" size="40px" />
         </q-item-section>
 
         <q-item-section>
@@ -103,14 +106,14 @@ export default {
     getPosts() {
       
         this.loadingPosts = true
-        this.$axios.get('http://localhost:3000/posts').then(response => {
+        this.$axios.get(`${ process.env.API }/posts`).then(response => {
           this.posts = response.data
           this.loadingPosts = false
         }).catch(err => {
           this.$q.dialog({
             dark: true,
             title: 'Error',
-            message: 'Could not find your location'
+            message: 'Could not download posts'
         })
           this.loadingPosts = false
         })

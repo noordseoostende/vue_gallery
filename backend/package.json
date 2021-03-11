@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "deploy": "heroku builds:create -a quasagram-backend"
+    "deploy": "heroku builds:create -a infinite-island-49694"
   },
   "author": "",
   "license": "ISC",
