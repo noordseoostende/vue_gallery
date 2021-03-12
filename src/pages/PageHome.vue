@@ -61,11 +61,11 @@
 
       <q-skeleton height="200px" square />
 
-      <q-card-actions align="right" class="q-gutter-md">
-        <q-skeleton type="QBtn" />
-        <q-skeleton type="QBtn" />
-      </q-card-actions>
-    </q-card>
+      <q-card-section>
+              <q-skeleton type="text" class="text-subtitle2" animation="fade" />
+              <q-skeleton type="text" width="50%" class="text-subtitle2" animation="fade" />
+            </q-card-section>
+          </q-card>
         </template>
       </div>
       <div class="col-4 large-screen-only">
